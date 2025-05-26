@@ -1,27 +1,25 @@
 [versions]
-agp = "8.11.0-alpha06"
-annotations = "26.0.2"
+agp = "8.10.0"
+coilCompose = "2.7.0"
 coreKtx = "1.16.0"
-hiltAndroid = "2.56.1"
-kotlin = "2.1.20"
+hiltAndroid = "2.56.2"
+kotlin = "2.1.21"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 kotlinxSerializationJson = "1.8.1"
-lifecycleRuntimeKtx = "2.8.7"
+lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
-composeBom = "2025.04.00"
-navigationCompose = "2.8.9"
-ksp = "2.1.20-1.0.32"
-jvm = "2.1.20"
-kotlin-serialization = "2.1.20"
-roomKtx = "2.7.0"
+composeBom = "2025.05.01"
+navigationCompose = "2.9.0"
+ksp = "2.1.21-2.0.1"
+roomKtx = "2.7.1"
 composeFoundation = "1.4.1"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
