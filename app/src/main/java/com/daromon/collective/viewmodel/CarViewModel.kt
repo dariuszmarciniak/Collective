@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.daromon.collective.domain.usecase.AddCarUseCase
 import com.daromon.collective.domain.usecase.DeleteCarUseCase
 import com.daromon.collective.domain.usecase.GetCarsUseCase
+import com.daromon.collective.domain.usecase.UpdateCarUseCase
 import com.daromon.collective.ui.event.CarEvent
 import com.daromon.collective.ui.state.CarUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class CarViewModel @Inject constructor(
     private val getCars: GetCarsUseCase,
     private val addCar: AddCarUseCase,
-    private val deleteCar: DeleteCarUseCase
+    private val deleteCar: DeleteCarUseCase,
+    private val updateCar: UpdateCarUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<CarUiState>(CarUiState.Loading)
@@ -37,7 +39,10 @@ class CarViewModel @Inject constructor(
                 addCar(event.car)
                 loadCars()
             }
-
+            is CarEvent.Update -> viewModelScope.launch {
+                updateCar(event.car)
+                loadCars()
+            }
             is CarEvent.Delete -> viewModelScope.launch {
                 deleteCar(event.car)
                 loadCars()
