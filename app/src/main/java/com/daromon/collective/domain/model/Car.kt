@@ -1,13 +1,19 @@
 package com.daromon.collective.domain.model
 
-import com.daromon.collective.data.local.CarEntity
-
 data class Car(
     val id: Int = 0,
     val model: String,
     val year: Int,
-    val photoUri: String? = null
+    val photoUri: String?,
+    val brand: String?,
+    val vin: String?,
+    val registrationNumber: String?,
+    val mileage: Int?,
+    val fuelType: String?,
+    val engineCapacity: Double?,
+    val power: Int?,
+    val color: String?,
+    val notes: String?,
+    val inspectionDate: String?,
+    val insuranceExpiry: String?
 )
-
-fun CarEntity.toDomain() = Car(id, model, year, photoUri)
-fun Car.toEntity() = CarEntity(id, model, year, photoUri)
