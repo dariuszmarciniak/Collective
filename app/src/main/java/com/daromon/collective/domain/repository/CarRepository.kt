@@ -7,4 +7,5 @@ interface CarRepository {
     fun getCars(): Flow<List<Car>>
     suspend fun insert(car: Car)
     suspend fun delete(car: Car)
+    suspend fun updateCar(car: Car)
 }

@@ -12,5 +12,8 @@ class CarRepositoryImpl(private val dao: CarDao) : CarRepository {
         dao.getAll().map { entities -> entities.map { it.toDomain() } }
 
     override suspend fun insert(car: Car) = dao.insert(car.toEntity())
+
     override suspend fun delete(car: Car) = dao.delete(car.toEntity())
+
+    override suspend fun updateCar(car: Car) = dao.update(car.toEntity())
 }

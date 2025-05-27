@@ -5,8 +5,9 @@ import com.daromon.collective.data.local.CarEntity
 data class Car(
     val id: Int = 0,
     val model: String,
-    val year: Int
+    val year: Int,
+    val photoUri: String? = null
 )
 
-fun CarEntity.toDomain() = Car(id, model, year)
-fun Car.toEntity() = CarEntity(id, model, year)
+fun CarEntity.toDomain() = Car(id, model, year, photoUri)
+fun Car.toEntity() = CarEntity(id, model, year, photoUri)
