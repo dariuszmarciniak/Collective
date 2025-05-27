@@ -1,5 +1,7 @@
 package com.daromon.collective.viewmodel
 
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.daromon.collective.domain.usecase.AddCarUseCase
@@ -15,6 +17,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,10 +44,12 @@ class CarViewModel @Inject constructor(
                 addCar(event.car)
                 loadCars()
             }
+
             is CarEvent.Update -> viewModelScope.launch {
                 updateCar(event.car)
                 loadCars()
             }
+
             is CarEvent.Delete -> viewModelScope.launch {
                 deleteCar(event.car)
                 loadCars()
@@ -52,10 +59,21 @@ class CarViewModel @Inject constructor(
 
     private fun loadCars() {
         viewModelScope.launch {
-            getCars()
-                .onStart { _state.value = CarUiState.Loading }
+            getCars().onStart { _state.value = CarUiState.Loading }
                 .catch { _state.value = CarUiState.Error("Failed to load") }
                 .collect { cars -> _state.value = CarUiState.Success(cars) }
         }
     }
+
+    fun copyImageToInternalStorage(context: Context, uri: Uri): String? {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        val fileName = "car_photo_${System.currentTimeMillis()}.jpg"
+        val file = File(context.filesDir, fileName)
+        val outputStream: OutputStream = file.outputStream()
+        inputStream?.copyTo(outputStream)
+        inputStream?.close()
+        outputStream.close()
+        return file.absolutePath
+    }
+
 }
