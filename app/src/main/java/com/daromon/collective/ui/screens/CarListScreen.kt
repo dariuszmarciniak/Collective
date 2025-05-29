@@ -31,7 +31,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -44,18 +43,15 @@ import com.daromon.collective.viewmodel.CarViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CarListScreen(viewModel: CarViewModel, navController: NavController) {
-    // Collect UI state from ViewModel
     val state by viewModel.state.collectAsState()
 
     Scaffold(
         topBar = {
-            // App bar with screen title
             TopAppBar(
                 title = { Text("Your Cars", fontWeight = FontWeight.Bold) }
             )
         },
         floatingActionButton = {
-            // Floating action button for adding a new car
             FloatingActionButton(
                 onClick = { navController.navigate(Screen.AddCar.route) },
                 containerColor = MaterialTheme.colorScheme.primary
@@ -70,7 +66,6 @@ fun CarListScreen(viewModel: CarViewModel, navController: NavController) {
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    // Loading indicator
                     CircularProgressIndicator()
                 }
 
@@ -78,14 +73,12 @@ fun CarListScreen(viewModel: CarViewModel, navController: NavController) {
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    // Error message
                     Text("Error: ${currentState.message}", color = MaterialTheme.colorScheme.error)
                 }
 
                 is CarUiState.Success -> {
                     val cars = currentState.cars
                     if (cars.isEmpty()) {
-                        // Empty state message
                         Box(
                             Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
@@ -96,7 +89,6 @@ fun CarListScreen(viewModel: CarViewModel, navController: NavController) {
                             )
                         }
                     } else {
-                        // List of cars
                         LazyColumn(
                             contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -133,13 +125,8 @@ fun CarListScreen(viewModel: CarViewModel, navController: NavController) {
                                         Spacer(Modifier.width(16.dp))
                                         Column {
                                             Text(
-                                                car.model,
+                                                "${car.brand ?: "Brak marki"} ${car.model ?: "Brak modelu"}",
                                                 style = MaterialTheme.typography.titleMedium
-                                            )
-                                            Text(
-                                                "${car.year}",
-                                                style = MaterialTheme.typography.bodyMedium,
-                                                color = Color.Gray
                                             )
                                         }
                                     }

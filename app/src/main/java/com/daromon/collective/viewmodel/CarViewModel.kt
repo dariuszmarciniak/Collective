@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daromon.collective.domain.model.Car
 import com.daromon.collective.domain.usecase.AddCarUseCase
 import com.daromon.collective.domain.usecase.DeleteCarUseCase
 import com.daromon.collective.domain.usecase.GetCarsUseCase
@@ -41,15 +42,19 @@ class CarViewModel @Inject constructor(
         when (event) {
             is CarEvent.Load -> loadCars()
             is CarEvent.Add -> viewModelScope.launch {
-                addCar(event.car)
-                loadCars()
+                try {
+                    if (!isCarValid(event.car)) return@launch
+                    addCar(event.car)
+                    loadCars()
+                } catch (e: Exception) {
+                    _state.value = CarUiState.Error("Nie udało się dodać auta")
+                }
             }
-
             is CarEvent.Update -> viewModelScope.launch {
+                if (!isCarValid(event.car)) return@launch
                 updateCar(event.car)
                 loadCars()
             }
-
             is CarEvent.Delete -> viewModelScope.launch {
                 deleteCar(event.car)
                 loadCars()
@@ -76,4 +81,7 @@ class CarViewModel @Inject constructor(
         return file.absolutePath
     }
 
+    private fun isCarValid(car: Car): Boolean {
+        return !car.model.isNullOrBlank() && !car.brand.isNullOrBlank()
+    }
 }
