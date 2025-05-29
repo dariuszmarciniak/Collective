@@ -42,8 +42,8 @@ import com.daromon.collective.viewmodel.CarViewModel
 @Composable
 fun AddCarScreen(navController: NavController, viewModel: CarViewModel) {
     var model by remember { mutableStateOf("") }
-    var year by remember { mutableStateOf("") }
     var brand by remember { mutableStateOf("") }
+    var year by remember { mutableStateOf("") }
     var vin by remember { mutableStateOf("") }
     var registrationNumber by remember { mutableStateOf("") }
     var mileage by remember { mutableStateOf("") }
@@ -55,7 +55,6 @@ fun AddCarScreen(navController: NavController, viewModel: CarViewModel) {
     var inspectionDate by remember { mutableStateOf("") }
     var insuranceExpiry by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
-
 
     val context = LocalContext.current
     var photoUri by remember { mutableStateOf<String?>(null) }
@@ -102,24 +101,25 @@ fun AddCarScreen(navController: NavController, viewModel: CarViewModel) {
                 Text("Select Photo")
             }
             OutlinedTextField(
+                value = brand,
+                onValueChange = { brand = it; showError = false },
+                label = { Text("Marka*") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                isError = showError && brand.isBlank()
+            )
+            OutlinedTextField(
                 value = model,
                 onValueChange = { model = it; showError = false },
-                label = { Text("Model") },
+                label = { Text("Model*") },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                isError = showError && model.isBlank()
             )
             OutlinedTextField(
                 value = year,
-                onValueChange = { year = it; showError = false },
+                onValueChange = { year = it },
                 label = { Text("Year") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                isError = showError && year.toIntOrNull() == null
-            )
-            OutlinedTextField(
-                value = brand,
-                onValueChange = { brand = it },
-                label = { Text("Marka") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -193,9 +193,9 @@ fun AddCarScreen(navController: NavController, viewModel: CarViewModel) {
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
-            if (showError && (model.isBlank() || year.isBlank() || year.toIntOrNull() == null)) {
+            if (showError && (brand.isBlank() || model.isBlank())) {
                 Text(
-                    "Wprowadź poprawny model i rok.",
+                    "Wprowadź poprawną markę i model.",
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(top = 8.dp)
@@ -204,24 +204,24 @@ fun AddCarScreen(navController: NavController, viewModel: CarViewModel) {
             Spacer(modifier = Modifier.height(24.dp))
             Button(
                 onClick = {
-                    if (model.isNotBlank() && year.toIntOrNull() != null) {
+                    if (brand.isNotBlank() && model.isNotBlank()) {
                         viewModel.onEvent(
                             CarEvent.Add(
                                 Car(
                                     model = model,
-                                    year = year.toInt(),
-                                    photoUri = photoUri?.toString(),
                                     brand = brand,
-                                    vin = vin,
-                                    registrationNumber = registrationNumber,
+                                    year = year.toIntOrNull(),
+                                    photoUri = photoUri?.toString(),
+                                    vin = vin.ifBlank { null },
+                                    registrationNumber = registrationNumber.ifBlank { null },
                                     mileage = mileage.toIntOrNull(),
-                                    fuelType = fuelType,
+                                    fuelType = fuelType.ifBlank { null },
                                     engineCapacity = engineCapacity.toDoubleOrNull(),
                                     power = power.toIntOrNull(),
-                                    color = color,
-                                    notes = notes,
-                                    inspectionDate = inspectionDate,
-                                    insuranceExpiry = insuranceExpiry
+                                    color = color.ifBlank { null },
+                                    notes = notes.ifBlank { null },
+                                    inspectionDate = inspectionDate.ifBlank { null },
+                                    insuranceExpiry = insuranceExpiry.ifBlank { null }
                                 )
                             )
                         )
