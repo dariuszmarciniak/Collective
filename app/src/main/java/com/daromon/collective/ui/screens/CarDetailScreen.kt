@@ -118,7 +118,7 @@ fun CarDetailScreen(
                 OutlinedTextField(
                     value = brand,
                     onValueChange = { brand = it; showError = false },
-                    label = { Text("Marka*") },
+                    label = { Text("Brand*") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     isError = showError && brand.isBlank()
@@ -148,69 +148,69 @@ fun CarDetailScreen(
                 OutlinedTextField(
                     value = registrationNumber,
                     onValueChange = { registrationNumber = it },
-                    label = { Text("Numer rejestracyjny") },
+                    label = { Text("Registartion Number") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = mileage,
                     onValueChange = { mileage = it },
-                    label = { Text("Przebieg") },
+                    label = { Text("Mileage") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = fuelType,
                     onValueChange = { fuelType = it },
-                    label = { Text("Typ paliwa") },
+                    label = { Text("Fuel Type") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = engineCapacity,
                     onValueChange = { engineCapacity = it },
-                    label = { Text("Pojemność silnika") },
+                    label = { Text("Engine Capacity") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = power,
                     onValueChange = { power = it },
-                    label = { Text("Moc silnika") },
+                    label = { Text("Power") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = color,
                     onValueChange = { color = it },
-                    label = { Text("Kolor") },
+                    label = { Text("Color") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
-                    label = { Text("Notatki") },
+                    label = { Text("Notes") },
                     singleLine = false,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = inspectionDate,
                     onValueChange = { inspectionDate = it },
-                    label = { Text("Data przeglądu") },
+                    label = { Text("Inspection Date") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = insuranceExpiry,
                     onValueChange = { insuranceExpiry = it },
-                    label = { Text("Wygaśnięcie ubezpieczenia") },
+                    label = { Text("Insurance Expiry") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 if (showError && (brand.isBlank() || model.isBlank())) {
                     Text(
-                        "Wprowadź poprawną markę i model.",
+                        "Please fill in all required fields (Brand and Model).",
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(top = 8.dp)
