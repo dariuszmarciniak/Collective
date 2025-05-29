@@ -125,7 +125,7 @@ fun CarListScreen(viewModel: CarViewModel, navController: NavController) {
                                         Spacer(Modifier.width(16.dp))
                                         Column {
                                             Text(
-                                                "${car.brand ?: "Brak marki"} ${car.model ?: "Brak modelu"}",
+                                                "${car.brand} ${car.model}",
                                                 style = MaterialTheme.typography.titleMedium
                                             )
                                         }
