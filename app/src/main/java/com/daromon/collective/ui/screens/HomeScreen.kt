@@ -29,16 +29,12 @@ import com.daromon.collective.ui.navigation.Screen
 fun HomeScreen(navController: NavController, openDrawer: () -> Unit) {
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Home Page") },
-                navigationIcon = {
-                    IconButton(onClick = openDrawer) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
-                    }
+            CenterAlignedTopAppBar(title = { Text("Home Page") }, navigationIcon = {
+                IconButton(onClick = openDrawer) {
+                    Icon(Icons.Default.Menu, contentDescription = "Menu")
                 }
-            )
-        }
-    ) { padding ->
+            })
+        }) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -51,8 +47,7 @@ fun HomeScreen(navController: NavController, openDrawer: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate(Screen.CarListScreen.route) }
-            ) {
+                    .clickable { navController.navigate(Screen.CarListScreen.route) }) {
                 Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
                     Text("Cars", style = MaterialTheme.typography.titleLarge)
                 }
@@ -61,10 +56,18 @@ fun HomeScreen(navController: NavController, openDrawer: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate("notes") }
-            ) {
+                    .clickable { navController.navigate("notes") }) {
                 Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
                     Text("Notes", style = MaterialTheme.typography.titleLarge)
+                }
+            }
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .clickable { navController.navigate(Screen.Settings.route) }) {
+                Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
+                    Text("Settings", style = MaterialTheme.typography.titleLarge)
                 }
             }
         }
