@@ -13,6 +13,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -48,18 +49,34 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ServiceHistoryScreen(carId: Int, viewModel: ServiceRecordViewModel) {
+fun ServiceHistoryScreen(
+    carId: Int,
+    viewModel: ServiceRecordViewModel,
+    openDrawer: () -> Unit
+) {
     val records by viewModel.records.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
     var editRecord by remember { mutableStateOf<ServiceRecord?>(null) }
 
     LaunchedEffect(carId) { viewModel.loadRecords(carId) }
 
-    Scaffold(topBar = { TopAppBar(title = { Text("Service History") }) }, floatingActionButton = {
-        FloatingActionButton(onClick = { showAddDialog = true }) {
-            Icon(Icons.Default.Add, contentDescription = "Add Service Record")
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Service History") },
+                navigationIcon = {
+                    IconButton(onClick = openDrawer) {
+                        Icon(Icons.Default.Menu, contentDescription = "Menu")
+                    }
+                }
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { showAddDialog = true }) {
+                Icon(Icons.Default.Add, contentDescription = "Add Service Record")
+            }
         }
-    }) { padding ->
+    ) { padding ->
         LazyColumn(contentPadding = padding) {
             items(records) { record ->
                 Card(
