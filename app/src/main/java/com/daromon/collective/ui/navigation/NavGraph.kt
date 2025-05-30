@@ -7,7 +7,9 @@ import androidx.navigation.compose.rememberNavController
 import com.daromon.collective.ui.screens.AddCarScreen
 import com.daromon.collective.ui.screens.CarDetailScreen
 import com.daromon.collective.ui.screens.CarListScreen
+import com.daromon.collective.ui.screens.ServiceHistoryScreen
 import com.daromon.collective.viewmodel.CarViewModel
+import com.daromon.collective.viewmodel.ServiceRecordViewModel
 
 sealed class Screen(val route: String) {
     object CarListScreen : Screen("car_list")
@@ -19,7 +21,11 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun NavGraph(startDestination: String = Screen.CarListScreen.route, carViewModel: CarViewModel) {
+fun NavGraph(
+    startDestination: String = Screen.CarListScreen.route,
+    carViewModel: CarViewModel,
+    serviceRecordViewModel: ServiceRecordViewModel
+) {
 
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = startDestination) {
@@ -34,6 +40,12 @@ fun NavGraph(startDestination: String = Screen.CarListScreen.route, carViewModel
         }
         composable(Screen.AddCar.route) {
             AddCarScreen(navController = navController, carViewModel)
+        }
+        composable("service_history/{carId}") { backStackEntry ->
+            val carId = backStackEntry.arguments?.getString("carId")?.toIntOrNull()
+            carId?.let {
+                ServiceHistoryScreen(carId = it, viewModel = serviceRecordViewModel)
+            }
         }
     }
 }

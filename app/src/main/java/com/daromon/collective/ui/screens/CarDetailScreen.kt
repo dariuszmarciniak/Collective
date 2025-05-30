@@ -148,7 +148,7 @@ fun CarDetailScreen(
                 OutlinedTextField(
                     value = registrationNumber,
                     onValueChange = { registrationNumber = it },
-                    label = { Text("Registartion Number") },
+                    label = { Text("Registration Number") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -248,6 +248,13 @@ fun CarDetailScreen(
                     }, modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Update")
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+                Button(
+                    onClick = { navController.navigate("service_history/${car.id}") },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("History Service")
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Button(
