@@ -1,51 +1,81 @@
 package com.daromon.collective.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.daromon.collective.ui.screens.AddCarScreen
 import com.daromon.collective.ui.screens.CarDetailScreen
 import com.daromon.collective.ui.screens.CarListScreen
+import com.daromon.collective.ui.screens.HomeScreen
+import com.daromon.collective.ui.screens.NotesScreen
 import com.daromon.collective.ui.screens.ServiceHistoryScreen
 import com.daromon.collective.viewmodel.CarViewModel
 import com.daromon.collective.viewmodel.ServiceRecordViewModel
 
 sealed class Screen(val route: String) {
+    object Home : Screen("home")
     object CarListScreen : Screen("car_list")
     object CarDetail : Screen("car_detail/{carId}") {
-        fun passId(id: Int) = "car_detail/$id"
+        fun passId(carId: Int) = "car_detail/$carId"
+    }
+    object AddCar : Screen("add_car")
+    object ServiceHistory : Screen("service_history/{carId}") {
+        fun passId(carId: Int) = "service_history/$carId"
     }
 
-    object AddCar : Screen("add_car")
+    object Notes : Screen("notes")
 }
 
 @Composable
 fun NavGraph(
-    startDestination: String = Screen.CarListScreen.route,
+    navController: NavHostController = rememberNavController(),
     carViewModel: CarViewModel,
-    serviceRecordViewModel: ServiceRecordViewModel
+    serviceRecordViewModel: ServiceRecordViewModel,
+    openDrawer: () -> Unit
 ) {
-
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = startDestination) {
-        composable(Screen.CarListScreen.route) {
-            CarListScreen(carViewModel, navController)
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Home.route
+    ) {
+        composable(Screen.Home.route) {
+            HomeScreen(navController, openDrawer)
         }
-        composable(Screen.CarDetail.route) { backStackEntry ->
-            val carId = backStackEntry.arguments?.getString("carId")?.toIntOrNull()
-            carId?.let {
-                CarDetailScreen(carId = it, navController = navController, carViewModel)
-            }
+        composable(Screen.CarListScreen.route) {
+            CarListScreen(
+                viewModel = carViewModel,
+                navController = navController,
+                openDrawer = openDrawer
+            )
         }
         composable(Screen.AddCar.route) {
-            AddCarScreen(navController = navController, carViewModel)
+            AddCarScreen(
+                navController = navController,
+                viewModel = carViewModel,
+                openDrawer = openDrawer
+            )
         }
-        composable("service_history/{carId}") { backStackEntry ->
-            val carId = backStackEntry.arguments?.getString("carId")?.toIntOrNull()
-            carId?.let {
-                ServiceHistoryScreen(carId = it, viewModel = serviceRecordViewModel)
-            }
+        composable(Screen.CarDetail.route) { backStackEntry ->
+            val carId =
+                backStackEntry.arguments?.getString("carId")?.toIntOrNull() ?: return@composable
+            CarDetailScreen(
+                carId = carId,
+                navController = navController,
+                viewModel = carViewModel
+            )
+        }
+        composable(Screen.ServiceHistory.route) { backStackEntry ->
+            val carId =
+                backStackEntry.arguments?.getString("carId")?.toIntOrNull() ?: return@composable
+            ServiceHistoryScreen(
+                carId = carId,
+                viewModel = serviceRecordViewModel,
+                openDrawer = openDrawer
+            )
+        }
+        composable(Screen.Notes.route) {
+            NotesScreen(openDrawer)
         }
     }
 }

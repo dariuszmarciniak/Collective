@@ -14,7 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -49,7 +49,11 @@ import com.daromon.collective.viewmodel.CarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddCarScreen(navController: NavController, viewModel: CarViewModel) {
+fun AddCarScreen(
+    navController: NavController,
+    viewModel: CarViewModel,
+    openDrawer: () -> Unit
+) {
     var model by remember { mutableStateOf("") }
     var brand by remember { mutableStateOf("") }
     var year by remember { mutableStateOf("") }
@@ -100,8 +104,8 @@ fun AddCarScreen(navController: NavController, viewModel: CarViewModel) {
             CenterAlignedTopAppBar(
                 title = { Text("Add New Car", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    IconButton(onClick = openDrawer) {
+                        Icon(Icons.Default.Menu, contentDescription = "Menu")
                     }
                 })
         },
