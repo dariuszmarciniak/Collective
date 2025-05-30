@@ -211,7 +211,7 @@ fun AddCarScreen(navController: NavController, viewModel: CarViewModel) {
                                     model = model,
                                     brand = brand,
                                     year = year.toIntOrNull(),
-                                    photoUri = photoUri?.toString(),
+                                    photoUri = photoUri,
                                     vin = vin.ifBlank { null },
                                     registrationNumber = registrationNumber.ifBlank { null },
                                     mileage = mileage.toIntOrNull(),
