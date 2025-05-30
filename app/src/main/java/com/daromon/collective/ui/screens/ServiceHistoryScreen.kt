@@ -90,17 +90,17 @@ fun ServiceHistoryScreen(carId: Int, viewModel: ServiceRecordViewModel) {
         }
         if (showAddDialog) {
             ServiceRecordDialog(
-                title = "Add service", initialRecord = ServiceRecord(
+                title = "Add Service", initialRecord = ServiceRecord(
                     carId = carId, date = "", type = "", description = "", cost = 0.0
                 ), onDismiss = { showAddDialog = false }, onConfirm = { record ->
                     viewModel.add(record)
-                showAddDialog = false
+                    showAddDialog = false
                 }, isEdit = false
             )
         }
         if (editRecord != null) {
             ServiceRecordDialog(
-                title = "Edit record",
+                title = "Edit Record",
                 initialRecord = editRecord!!,
                 onDismiss = { editRecord = null },
                 onConfirm = { record ->
