@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -44,7 +45,8 @@ fun MainWithDrawer(
                     onClick = {
                         navController.navigate(Screen.Home.route) { popUpTo(0) }
                         scope.launch { drawerState.close() }
-                    }
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
                     label = { Text("Cars") },
@@ -52,7 +54,8 @@ fun MainWithDrawer(
                     onClick = {
                         navController.navigate(Screen.CarListScreen.route) { popUpTo(0) }
                         scope.launch { drawerState.close() }
-                    }
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
                     label = { Text("Notes") },
@@ -60,7 +63,17 @@ fun MainWithDrawer(
                     onClick = {
                         navController.navigate("notes") { popUpTo(0) }
                         scope.launch { drawerState.close() }
-                    }
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+                NavigationDrawerItem(
+                    label = { Text("Settings") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        navController.navigate(Screen.Settings.route)
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
             }
         }
