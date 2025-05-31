@@ -34,10 +34,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.daromon.collective.R
 import com.daromon.collective.ui.navigation.Screen
 import com.daromon.collective.ui.state.CarUiState
 import com.daromon.collective.viewmodel.CarViewModel
@@ -54,10 +56,10 @@ fun CarListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Your Cars", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.your_cars), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = openDrawer) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
+                        Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
                     }
                 }
             )
@@ -67,7 +69,7 @@ fun CarListScreen(
                 onClick = { navController.navigate(Screen.AddCar.route) },
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add car")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_car_fab))
             }
         }
     ) { padding ->
@@ -84,7 +86,10 @@ fun CarListScreen(
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("Error: ${currentState.message}", color = MaterialTheme.colorScheme.error)
+                    Text(
+                        stringResource(R.string.error, currentState.message),
+                        color = MaterialTheme.colorScheme.error
+                    )
                 }
 
                 is CarUiState.Success -> {
@@ -95,7 +100,7 @@ fun CarListScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                "No cars. Add your first one!",
+                                stringResource(R.string.no_cars),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         }

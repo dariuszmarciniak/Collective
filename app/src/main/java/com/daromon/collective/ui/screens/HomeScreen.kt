@@ -20,8 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.daromon.collective.R
 import com.daromon.collective.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,12 +31,16 @@ import com.daromon.collective.ui.navigation.Screen
 fun HomeScreen(navController: NavController, openDrawer: () -> Unit) {
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = { Text("Home Page") }, navigationIcon = {
-                IconButton(onClick = openDrawer) {
-                    Icon(Icons.Default.Menu, contentDescription = "Menu")
+            CenterAlignedTopAppBar(
+                title = { Text(stringResource(R.string.home_page)) },
+                navigationIcon = {
+                    IconButton(onClick = openDrawer) {
+                        Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
+                    }
                 }
-            })
-        }) { padding ->
+            )
+        }
+    ) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -47,27 +53,36 @@ fun HomeScreen(navController: NavController, openDrawer: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate(Screen.CarListScreen.route) }) {
+                    .clickable { navController.navigate(Screen.CarListScreen.route) }
+            ) {
                 Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
-                    Text("Cars", style = MaterialTheme.typography.titleLarge)
+                    Text(stringResource(R.string.cars), style = MaterialTheme.typography.titleLarge)
                 }
             }
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate("notes") }) {
+                    .clickable { navController.navigate(Screen.Notes.route) }
+            ) {
                 Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
-                    Text("Notes", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        stringResource(R.string.notes),
+                        style = MaterialTheme.typography.titleLarge
+                    )
                 }
             }
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate(Screen.Settings.route) }) {
+                    .clickable { navController.navigate(Screen.Settings.route) }
+            ) {
                 Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
-                    Text("Settings", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        stringResource(R.string.settings),
+                        style = MaterialTheme.typography.titleLarge
+                    )
                 }
             }
         }

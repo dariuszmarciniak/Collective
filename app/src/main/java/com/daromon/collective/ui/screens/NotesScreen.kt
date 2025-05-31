@@ -12,19 +12,21 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.daromon.collective.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotesScreen(openDrawer: () -> Unit) {
     TopAppBar(
-        title = { Text("Notes") },
+        title = { Text(stringResource(R.string.notes)) },
         navigationIcon = {
             IconButton(onClick = openDrawer) {
-                Icon(Icons.Default.Menu, contentDescription = "Menu")
+                Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
             }
         }
     )
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Soon…")
+        Text(stringResource(R.string.soon))
     }
 }

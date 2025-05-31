@@ -43,12 +43,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.daromon.collective.R
 import com.daromon.collective.domain.model.Car
 import com.daromon.collective.domain.model.FuelType
 import com.daromon.collective.ui.event.CarEvent
@@ -100,26 +102,29 @@ fun CarDetailScreen(
 
         fun validate(): Boolean {
             val newErrors = mutableMapOf<String, String>()
-            if (brand.isBlank()) newErrors["brand"] = "Required field"
-            if (model.isBlank()) newErrors["model"] = "Required field"
+            if (brand.isBlank()) newErrors["brand"] = context.getString(R.string.required_field)
+            if (model.isBlank()) newErrors["model"] = context.getString(R.string.required_field)
             if (year.isNotBlank() && (year.length != 4 || year.toIntOrNull() == null)) newErrors["year"] =
-                "Year must be 4 digits"
+                context.getString(R.string.year_must_be_4_digits)
             if (mileage.isNotBlank() && mileage.toIntOrNull() == null) newErrors["mileage"] =
-                "Numbers only"
+                context.getString(R.string.numbers_only)
             if (engineCapacity.isNotBlank() && engineCapacity.toDoubleOrNull() == null) newErrors["engineCapacity"] =
-                "Numbers only"
+                context.getString(R.string.numbers_only)
             if (power.isNotBlank() && power.toIntOrNull() == null) newErrors["power"] =
-                "Numbers only"
+                context.getString(R.string.numbers_only)
             errors = newErrors
             return newErrors.isEmpty()
         }
 
         Scaffold(topBar = {
             CenterAlignedTopAppBar(title = {
-                Text("Car Details", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.car_details), fontWeight = FontWeight.Bold)
             }, navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back)
+                    )
                 }
             })
         }, bottomBar = {
@@ -153,7 +158,7 @@ fun CarDetailScreen(
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    Text("Update")
+                    Text(stringResource(R.string.update))
                 }
             }
         }) { padding ->
@@ -167,7 +172,7 @@ fun CarDetailScreen(
                 if (photoUri != null) {
                     AsyncImage(
                         model = photoUri,
-                        contentDescription = "Car photo",
+                        contentDescription = stringResource(R.string.select_photo),
                         modifier = Modifier
                             .size(96.dp)
                             .clickable { showImageDialog = true })
@@ -176,17 +181,17 @@ fun CarDetailScreen(
                     onClick = { pickImageLauncher.launch("image/*") },
                     modifier = Modifier.padding(vertical = 8.dp)
                 ) {
-                    Text("Change Photo")
+                    Text(stringResource(R.string.change_photo))
                 }
                 if (showImageDialog && photoUri != null) {
                     AlertDialog(
                         onDismissRequest = { showImageDialog = false },
                         confirmButton = {},
-                        title = { Text("Preview") },
+                        title = { Text(stringResource(R.string.preview)) },
                         text = {
                             AsyncImage(
                                 model = photoUri,
-                                contentDescription = "Car photo",
+                                contentDescription = stringResource(R.string.select_photo),
                                 modifier = Modifier.size(300.dp)
                             )
                         })
@@ -197,8 +202,8 @@ fun CarDetailScreen(
                         brand = it
                         errors = errors - "brand"
                     },
-                    label = { Text("Brand*") },
-                    placeholder = { Text("e.g. Toyota") },
+                    label = { Text(stringResource(R.string.brand)) },
+                    placeholder = { Text(stringResource(R.string.brand_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     isError = errors.containsKey("brand"),
@@ -215,8 +220,8 @@ fun CarDetailScreen(
                         model = it
                         errors = errors - "model"
                     },
-                    label = { Text("Model*") },
-                    placeholder = { Text("e.g. Corolla") },
+                    label = { Text(stringResource(R.string.model)) },
+                    placeholder = { Text(stringResource(R.string.model_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     isError = errors.containsKey("model"),
@@ -233,8 +238,8 @@ fun CarDetailScreen(
                         if (it.length <= 4) year = it.filter { c -> c.isDigit() }
                         errors = errors - "year"
                     },
-                    label = { Text("Year") },
-                    placeholder = { Text("e.g. 2020") },
+                    label = { Text(stringResource(R.string.year)) },
+                    placeholder = { Text(stringResource(R.string.year_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -249,16 +254,16 @@ fun CarDetailScreen(
                 OutlinedTextField(
                     value = vin,
                     onValueChange = { vin = it },
-                    label = { Text("VIN") },
-                    placeholder = { Text("17 characters") },
+                    label = { Text(stringResource(R.string.vin)) },
+                    placeholder = { Text(stringResource(R.string.vin_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = registrationNumber,
                     onValueChange = { registrationNumber = it },
-                    label = { Text("Registration Number") },
-                    placeholder = { Text("e.g. WX12345") },
+                    label = { Text(stringResource(R.string.registration_number)) },
+                    placeholder = { Text(stringResource(R.string.registration_number_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -268,8 +273,8 @@ fun CarDetailScreen(
                         mileage = it.filter { c -> c.isDigit() }
                         errors = errors - "mileage"
                     },
-                    label = { Text("Mileage") },
-                    placeholder = { Text("e.g. 150000") },
+                    label = { Text(stringResource(R.string.mileage)) },
+                    placeholder = { Text(stringResource(R.string.mileage_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -285,10 +290,18 @@ fun CarDetailScreen(
                     expanded = showFuelTypeMenu,
                     onExpandedChange = { showFuelTypeMenu = !showFuelTypeMenu }) {
                     OutlinedTextField(
-                        value = fuelType?.displayName ?: "",
+                        value = fuelType?.let {
+                            when (it) {
+                                FuelType.PETROL -> stringResource(R.string.petrol)
+                                FuelType.DIESEL -> stringResource(R.string.diesel)
+                                FuelType.LPG -> stringResource(R.string.lpg)
+                                FuelType.ELECTRIC -> stringResource(R.string.electric)
+                                FuelType.HYBRID -> stringResource(R.string.hybrid)
+                            }
+                        } ?: "",
                         onValueChange = {},
-                        label = { Text("Fuel Type") },
-                        placeholder = { Text("Select fuel type") },
+                        label = { Text(stringResource(R.string.fuel_type)) },
+                        placeholder = { Text(stringResource(R.string.select_fuel_type)) },
                         readOnly = true,
                         modifier = Modifier
                             .menuAnchor()
@@ -298,7 +311,17 @@ fun CarDetailScreen(
                         expanded = showFuelTypeMenu,
                         onDismissRequest = { showFuelTypeMenu = false }) {
                         FuelType.values().forEach { type ->
-                            DropdownMenuItem(text = { Text(type.displayName) }, onClick = {
+                            DropdownMenuItem(text = {
+                                Text(
+                                    when (type) {
+                                        FuelType.PETROL -> stringResource(R.string.petrol)
+                                        FuelType.DIESEL -> stringResource(R.string.diesel)
+                                        FuelType.LPG -> stringResource(R.string.lpg)
+                                        FuelType.ELECTRIC -> stringResource(R.string.electric)
+                                        FuelType.HYBRID -> stringResource(R.string.hybrid)
+                                    }
+                                )
+                            }, onClick = {
                                 fuelType = type
                                 showFuelTypeMenu = false
                             })
@@ -311,8 +334,8 @@ fun CarDetailScreen(
                         engineCapacity = it.filter { c -> c.isDigit() || c == '.' }
                         errors = errors - "engineCapacity"
                     },
-                    label = { Text("Engine Capacity") },
-                    placeholder = { Text("e.g. 1.8") },
+                    label = { Text(stringResource(R.string.engine_capacity)) },
+                    placeholder = { Text(stringResource(R.string.engine_capacity_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -330,8 +353,8 @@ fun CarDetailScreen(
                         power = it.filter { c -> c.isDigit() }
                         errors = errors - "power"
                     },
-                    label = { Text("Power") },
-                    placeholder = { Text("e.g. 140") },
+                    label = { Text(stringResource(R.string.power)) },
+                    placeholder = { Text(stringResource(R.string.power_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -346,32 +369,32 @@ fun CarDetailScreen(
                 OutlinedTextField(
                     value = color,
                     onValueChange = { color = it },
-                    label = { Text("Color") },
-                    placeholder = { Text("e.g. Red") },
+                    label = { Text(stringResource(R.string.color)) },
+                    placeholder = { Text(stringResource(R.string.color_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
-                    label = { Text("Notes") },
-                    placeholder = { Text("Additional notes") },
+                    label = { Text(stringResource(R.string.notes_label)) },
+                    placeholder = { Text(stringResource(R.string.notes_placeholder)) },
                     singleLine = false,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = inspectionDate,
                     onValueChange = { inspectionDate = it },
-                    label = { Text("Inspection Date") },
-                    placeholder = { Text("e.g. 01.01.2025") },
+                    label = { Text(stringResource(R.string.inspection_date)) },
+                    placeholder = { Text(stringResource(R.string.inspection_date_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = insuranceExpiry,
                     onValueChange = { insuranceExpiry = it },
-                    label = { Text("Insurance Expiry") },
-                    placeholder = { Text("e.g. 01.01.2025") },
+                    label = { Text(stringResource(R.string.insurance_expiry)) },
+                    placeholder = { Text(stringResource(R.string.insurance_expiry_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -380,7 +403,7 @@ fun CarDetailScreen(
                     onClick = { navController.navigate("service_history/${car.id}") },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Service History")
+                    Text(stringResource(R.string.service_history))
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Button(
@@ -388,24 +411,24 @@ fun CarDetailScreen(
                     colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Delete")
+                    Text(stringResource(R.string.delete))
                 }
                 if (showConfirmDialog) {
                     AlertDialog(
                         onDismissRequest = { showConfirmDialog = false },
-                        title = { Text("Delete Car") },
-                        text = { Text("Are you sure you want to delete this car?") },
+                        title = { Text(stringResource(R.string.delete_car)) },
+                        text = { Text(stringResource(R.string.delete_confirm)) },
                         confirmButton = {
                             TextButton(onClick = {
                                 viewModel.onEvent(CarEvent.Delete(car))
                                 navController.popBackStack()
                             }) {
-                                Text("Yes")
+                                Text(stringResource(R.string.yes))
                             }
                         },
                         dismissButton = {
                             TextButton(onClick = { showConfirmDialog = false }) {
-                                Text("No")
+                                Text(stringResource(R.string.no))
                             }
                         })
                 }
