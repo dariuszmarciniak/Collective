@@ -12,9 +12,11 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.daromon.collective.R
 import com.daromon.collective.ui.navigation.NavGraph
 import com.daromon.collective.ui.navigation.Screen
 import com.daromon.collective.viewmodel.CarViewModel
@@ -40,7 +42,7 @@ fun MainWithDrawer(
                     modifier = Modifier.padding(16.dp)
                 )
                 NavigationDrawerItem(
-                    label = { Text("Home Page") },
+                    label = { Text(stringResource(R.string.home_page)) },
                     selected = false,
                     onClick = {
                         navController.navigate(Screen.Home.route) { popUpTo(0) }
@@ -49,7 +51,7 @@ fun MainWithDrawer(
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
-                    label = { Text("Cars") },
+                    label = { Text(stringResource(R.string.cars)) },
                     selected = false,
                     onClick = {
                         navController.navigate(Screen.CarListScreen.route) { popUpTo(0) }
@@ -58,7 +60,7 @@ fun MainWithDrawer(
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
-                    label = { Text("Notes") },
+                    label = { Text(stringResource(R.string.notes)) },
                     selected = false,
                     onClick = {
                         navController.navigate("notes") { popUpTo(0) }
@@ -67,7 +69,7 @@ fun MainWithDrawer(
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
-                    label = { Text("Settings") },
+                    label = { Text(stringResource(R.string.settings)) },
                     selected = false,
                     onClick = {
                         scope.launch { drawerState.close() }

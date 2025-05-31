@@ -38,8 +38,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.daromon.collective.R
 import com.daromon.collective.domain.model.ServiceRecord
 import com.daromon.collective.viewmodel.ServiceRecordViewModel
 import java.text.SimpleDateFormat
@@ -63,17 +65,17 @@ fun ServiceHistoryScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Service History") },
+                title = { Text(stringResource(R.string.service_history)) },
                 navigationIcon = {
                     IconButton(onClick = openDrawer) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu")
+                        Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
                     }
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { showAddDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Add Service Record")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_service))
             }
         }
     ) { padding ->
@@ -85,20 +87,20 @@ fun ServiceHistoryScreen(
                         .padding(vertical = 4.dp)
                 ) {
                     Column(Modifier.padding(16.dp)) {
-                        Text("Date: ${record.date}")
-                        Text("Description: ${record.description}")
-                        Text("Cost: ${record.cost}")
-                        Text("Type: ${record.type}")
+                        Text("${stringResource(R.string.date)} ${record.date}")
+                        Text("${stringResource(R.string.description)} ${record.description}")
+                        Text("${stringResource(R.string.cost)} ${record.cost}")
+                        Text("${stringResource(R.string.type)} ${record.type}")
                         Row {
                             Button(onClick = { editRecord = record }) {
-                                Text("Edit")
+                                Text(stringResource(R.string.edit))
                             }
                             Spacer(Modifier.width(8.dp))
                             Button(
                                 onClick = { viewModel.delete(record) },
                                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error)
                             ) {
-                                Text("Delete")
+                                Text(stringResource(R.string.delete))
                             }
                         }
                     }
@@ -107,7 +109,7 @@ fun ServiceHistoryScreen(
         }
         if (showAddDialog) {
             ServiceRecordDialog(
-                title = "Add Service", initialRecord = ServiceRecord(
+                title = stringResource(R.string.add_service), initialRecord = ServiceRecord(
                     carId = carId, date = "", type = "", description = "", cost = 0.0
                 ), onDismiss = { showAddDialog = false }, onConfirm = { record ->
                     viewModel.add(record)
@@ -117,7 +119,7 @@ fun ServiceHistoryScreen(
         }
         if (editRecord != null) {
             ServiceRecordDialog(
-                title = "Edit Record",
+                title = stringResource(R.string.edit_record),
                 initialRecord = editRecord!!,
                 onDismiss = { editRecord = null },
                 onConfirm = { record ->
@@ -168,8 +170,8 @@ fun ServiceRecordDialog(
                     )
                 )
             }
-        }) { Text(if (isEdit) "Save" else "Add") }
-    }, dismissButton = { Button(onClick = onDismiss) { Text("Cancel") } })
+        }) { Text(if (isEdit) stringResource(R.string.save) else stringResource(R.string.add)) }
+    }, dismissButton = { Button(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } })
 }
 
 @Composable
@@ -188,35 +190,35 @@ fun ServiceRecordForm(
         DatePickerField(
             value = date,
             onValueChange = onDateChange,
-            label = "Date*",
+            label = stringResource(R.string.date),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = type,
             onValueChange = onTypeChange,
-            label = { Text("Type*") },
+            label = { Text(stringResource(R.string.type)) },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = description,
             onValueChange = onDescriptionChange,
-            label = { Text("Description*") },
+            label = { Text(stringResource(R.string.description)) },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = cost,
             onValueChange = onCostChange,
-            label = { Text("Cost*") },
+            label = { Text(stringResource(R.string.cost)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
         if (showError) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                "All fields are required, cost must be a positive number.",
+                stringResource(R.string.all_fields_required),
                 color = MaterialTheme.colorScheme.error
             )
         }
@@ -239,7 +241,7 @@ fun DatePickerField(
         readOnly = true,
         trailingIcon = {
             IconButton(onClick = { showDatePicker = true }) {
-                Icon(Icons.Default.DateRange, "Select date")
+                Icon(Icons.Default.DateRange, stringResource(R.string.date))
             }
         })
 
@@ -259,11 +261,11 @@ fun DatePickerField(
                 onValueChange(selectedDate)
                 showDatePicker = false
             }) {
-                Text("OK")
+                Text(stringResource(R.string.ok))
             }
         }, dismissButton = {
             Button(onClick = { showDatePicker = false }) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
         }) {
             DatePicker(
