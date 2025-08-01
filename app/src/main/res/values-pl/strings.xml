@@ -66,6 +66,15 @@
     <string name="year_must_be_4_digits">Rok musi mieć 4 cyfry</string>
     <string name="numbers_only">Tylko liczby</string>
     <string name="language">Język</string>
+    <string name="persons">Osoby</string>
+    <string name="person_details">Szczegóły osoby</string>
+    <string name="first_name">Imię</string>
+    <string name="last_name">Nazwisko</string>
+    <string name="phone">Telefon</string>
+    <string name="email">Email</string>
+    <string name="address">Adres</string>
+    <string name="note">Notatka</string>
+    <string name="date_of_birth">Data urodzenia</string>
     <!-- Fuel types -->
     <string name="petrol">Benzyna</string>
     <string name="diesel">Diesel</string>

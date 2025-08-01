@@ -37,10 +37,8 @@ fun HomeScreen(navController: NavController, openDrawer: () -> Unit) {
                     IconButton(onClick = openDrawer) {
                         Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
                     }
-                }
-            )
-        }
-    ) { padding ->
+                })
+        }) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -53,8 +51,7 @@ fun HomeScreen(navController: NavController, openDrawer: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate(Screen.CarListScreen.route) }
-            ) {
+                    .clickable { navController.navigate(Screen.CarListScreen.route) }) {
                 Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
                     Text(stringResource(R.string.cars), style = MaterialTheme.typography.titleLarge)
                 }
@@ -63,11 +60,21 @@ fun HomeScreen(navController: NavController, openDrawer: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate(Screen.Notes.route) }
-            ) {
+                    .clickable { navController.navigate(Screen.Notes.route) }) {
                 Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
                     Text(
-                        stringResource(R.string.notes),
+                        stringResource(R.string.notes), style = MaterialTheme.typography.titleLarge
+                    )
+                }
+            }
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .clickable { navController.navigate(Screen.Settings.route) }) {
+                Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
+                    Text(
+                        stringResource(R.string.settings),
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
@@ -76,11 +83,10 @@ fun HomeScreen(navController: NavController, openDrawer: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate(Screen.Settings.route) }
-            ) {
+                    .clickable { navController.navigate(Screen.Persons.route) }) {
                 Box(Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
                     Text(
-                        stringResource(R.string.settings),
+                        stringResource(R.string.persons),
                         style = MaterialTheme.typography.titleLarge
                     )
                 }

@@ -20,13 +20,15 @@ import com.daromon.collective.R
 import com.daromon.collective.ui.navigation.NavGraph
 import com.daromon.collective.ui.navigation.Screen
 import com.daromon.collective.viewmodel.CarViewModel
+import com.daromon.collective.viewmodel.PersonViewModel
 import com.daromon.collective.viewmodel.ServiceRecordViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainWithDrawer(
     carViewModel: CarViewModel,
-    serviceRecordViewModel: ServiceRecordViewModel
+    serviceRecordViewModel: ServiceRecordViewModel,
+    personViewModel: PersonViewModel
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -60,6 +62,7 @@ fun MainWithDrawer(
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
+
                     label = { Text(stringResource(R.string.notes)) },
                     selected = false,
                     onClick = {
@@ -77,6 +80,15 @@ fun MainWithDrawer(
                     },
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
+                NavigationDrawerItem(
+                    label = { Text(stringResource(R.string.persons)) },
+                    selected = false,
+                    onClick = {
+                        navController.navigate(Screen.Persons.route) { popUpTo(0) }
+                        scope.launch { drawerState.close() }
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
             }
         }
     ) {
@@ -84,6 +96,7 @@ fun MainWithDrawer(
             navController = navController,
             carViewModel = carViewModel,
             serviceRecordViewModel = serviceRecordViewModel,
+            personViewModel = personViewModel,
             openDrawer = { scope.launch { drawerState.open() } }
         )
     }
