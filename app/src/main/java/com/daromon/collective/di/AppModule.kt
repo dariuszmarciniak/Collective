@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Room
 import com.daromon.collective.data.local.AppDatabase
 import com.daromon.collective.data.local.CarDao
+import com.daromon.collective.data.local.PersonDao
 import com.daromon.collective.data.local.ServiceRecordDao
 import com.daromon.collective.domain.repository.CarRepository
 import com.daromon.collective.domain.repository.CarRepositoryImpl
+import com.daromon.collective.domain.repository.PersonRepository
+import com.daromon.collective.domain.repository.PersonRepositoryImpl
 import com.daromon.collective.domain.repository.ServiceRecordRepository
 import com.daromon.collective.domain.repository.ServiceRecordRepositoryImpl
 import dagger.Module
@@ -35,4 +38,10 @@ object AppModule {
     @Provides
     fun provideServiceRecordRepository(dao: ServiceRecordDao): ServiceRecordRepository =
         ServiceRecordRepositoryImpl(dao)
+
+    @Provides
+    fun providePersonDao(db: AppDatabase): PersonDao = db.personDao()
+
+    @Provides
+    fun providePersonRepository(dao: PersonDao): PersonRepository = PersonRepositoryImpl(dao)
 }

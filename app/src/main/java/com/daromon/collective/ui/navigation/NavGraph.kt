@@ -10,9 +10,12 @@ import com.daromon.collective.ui.screens.CarDetailScreen
 import com.daromon.collective.ui.screens.CarListScreen
 import com.daromon.collective.ui.screens.HomeScreen
 import com.daromon.collective.ui.screens.NotesScreen
+import com.daromon.collective.ui.screens.PersonDetailScreen
+import com.daromon.collective.ui.screens.PersonsScreen
 import com.daromon.collective.ui.screens.ServiceHistoryScreen
 import com.daromon.collective.ui.screens.SettingsScreen
 import com.daromon.collective.viewmodel.CarViewModel
+import com.daromon.collective.viewmodel.PersonViewModel
 import com.daromon.collective.viewmodel.ServiceRecordViewModel
 
 sealed class Screen(val route: String) {
@@ -29,6 +32,7 @@ sealed class Screen(val route: String) {
 
     object Notes : Screen("notes")
     object Settings : Screen("settings")
+    object Persons : Screen("persons")
 }
 
 @Composable
@@ -36,6 +40,7 @@ fun NavGraph(
     navController: NavHostController = rememberNavController(),
     carViewModel: CarViewModel,
     serviceRecordViewModel: ServiceRecordViewModel,
+    personViewModel: PersonViewModel,
     openDrawer: () -> Unit
 ) {
     NavHost(
@@ -73,6 +78,13 @@ fun NavGraph(
         }
         composable(Screen.Settings.route) {
             SettingsScreen(openDrawer)
+        }
+        composable("persons") {
+            PersonsScreen(navController, personViewModel, openDrawer)
+        }
+        composable("person_detail/{personId}") { backStackEntry ->
+            val personId = backStackEntry.arguments?.getString("personId")?.toIntOrNull() ?: 0
+            PersonDetailScreen(personId, navController, personViewModel)
         }
     }
 }
