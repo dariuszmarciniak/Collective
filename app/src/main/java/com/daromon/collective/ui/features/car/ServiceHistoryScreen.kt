@@ -1,4 +1,4 @@
-package com.daromon.collective.ui.screens
+package com.daromon.collective.ui.features.car
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,7 +43,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.daromon.collective.R
 import com.daromon.collective.domain.model.ServiceRecord
-import com.daromon.collective.viewmodel.ServiceRecordViewModel
+import com.daromon.collective.ui.features.car.ServiceRecordViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

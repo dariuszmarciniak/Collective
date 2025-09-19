@@ -1,4 +1,4 @@
-package com.daromon.collective.ui.screens
+package com.daromon.collective.ui.features.person
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -42,7 +42,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.daromon.collective.R
 import com.daromon.collective.domain.model.Person
-import com.daromon.collective.viewmodel.PersonViewModel
+import com.daromon.collective.ui.features.person.PersonViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -185,7 +185,6 @@ fun PersonDetailScreen(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
-            // Pole wyboru daty urodzenia
             OutlinedTextField(
                 value = dateOfBirth?.format(dateFormatter) ?: "",
                 onValueChange = {},

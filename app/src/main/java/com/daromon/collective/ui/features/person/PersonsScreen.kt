@@ -1,4 +1,4 @@
-package com.daromon.collective.ui.screens
+package com.daromon.collective.ui.features.person
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.daromon.collective.R
-import com.daromon.collective.viewmodel.PersonViewModel
+import com.daromon.collective.ui.features.person.PersonViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

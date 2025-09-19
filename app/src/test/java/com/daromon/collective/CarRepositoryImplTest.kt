@@ -3,7 +3,7 @@ package com.daromon.collective
 import com.daromon.collective.data.local.CarDao
 import com.daromon.collective.data.local.CarEntity
 import com.daromon.collective.domain.model.Car
-import com.daromon.collective.domain.repository.CarRepositoryImpl
+import com.daromon.collective.data.repository.CarRepositoryImpl
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

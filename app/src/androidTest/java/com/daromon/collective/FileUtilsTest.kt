@@ -8,7 +8,7 @@ import com.daromon.collective.domain.usecase.AddCarUseCase
 import com.daromon.collective.domain.usecase.DeleteCarUseCase
 import com.daromon.collective.domain.usecase.GetCarsUseCase
 import com.daromon.collective.domain.usecase.UpdateCarUseCase
-import com.daromon.collective.viewmodel.CarViewModel
+import com.daromon.collective.ui.features.car.CarViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue

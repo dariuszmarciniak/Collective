@@ -1,4 +1,4 @@
-package com.daromon.collective.viewmodel
+package com.daromon.collective.ui.features.car
 
 import android.content.Context
 import android.net.Uri
