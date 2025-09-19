@@ -1,5 +1,6 @@
 package com.daromon.collective.ui.features.car
 
+import DatePickerField
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -55,7 +56,6 @@ import com.daromon.collective.domain.model.Car
 import com.daromon.collective.domain.model.FuelType
 import com.daromon.collective.ui.event.CarEvent
 import com.daromon.collective.ui.state.CarUiState
-import com.daromon.collective.ui.features.car.CarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -382,20 +382,16 @@ fun CarDetailScreen(
                     singleLine = false,
                     modifier = Modifier.fillMaxWidth()
                 )
-                OutlinedTextField(
+                DatePickerField(
                     value = inspectionDate,
                     onValueChange = { inspectionDate = it },
-                    label = { Text(stringResource(R.string.inspection_date)) },
-                    placeholder = { Text(stringResource(R.string.inspection_date_placeholder)) },
-                    singleLine = true,
+                    label = stringResource(R.string.inspection_date),
                     modifier = Modifier.fillMaxWidth()
                 )
-                OutlinedTextField(
+                DatePickerField(
                     value = insuranceExpiry,
                     onValueChange = { insuranceExpiry = it },
-                    label = { Text(stringResource(R.string.insurance_expiry)) },
-                    placeholder = { Text(stringResource(R.string.insurance_expiry_placeholder)) },
-                    singleLine = true,
+                    label = stringResource(R.string.insurance_expiry),
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(80.dp))
