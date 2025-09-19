@@ -1,5 +1,6 @@
 package com.daromon.collective.ui.features.car
 
+import DatePickerField
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,14 +48,11 @@ import com.daromon.collective.R
 import com.daromon.collective.domain.model.Car
 import com.daromon.collective.domain.model.FuelType
 import com.daromon.collective.ui.event.CarEvent
-import com.daromon.collective.ui.features.car.CarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCarScreen(
-    navController: NavController,
-    viewModel: CarViewModel,
-    openDrawer: () -> Unit
+    navController: NavController, viewModel: CarViewModel, openDrawer: () -> Unit
 ) {
     var model by remember { mutableStateOf("") }
     var brand by remember { mutableStateOf("") }
@@ -102,60 +100,54 @@ fun AddCarScreen(
         return newErrors.isEmpty()
     }
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.add_car), fontWeight = FontWeight.Bold) },
-                navigationIcon = {
-                    IconButton(onClick = openDrawer) {
-                        Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
-                    }
-                })
-        },
-        bottomBar = {
-            Surface(shadowElevation = 8.dp) {
-                Button(
-                    onClick = {
-                        if (validate()) {
-                            viewModel.onEvent(
-                                CarEvent.Add(
-                                    Car(
-                                        model = model,
-                                        brand = brand,
-                                        year = year.toIntOrNull(),
-                                        photoUri = photoUri,
-                                        vin = vin.ifBlank { null },
-                                        registrationNumber = registrationNumber.ifBlank { null },
-                                        mileage = mileage.toIntOrNull(),
-                                        fuelType = fuelType?.displayName,
-                                        engineCapacity = engineCapacity.toDoubleOrNull(),
-                                        power = power.toIntOrNull(),
-                                        color = color.ifBlank { null },
-                                        notes = notes.ifBlank { null },
-                                        inspectionDate = inspectionDate.ifBlank { null },
-                                        insuranceExpiry = insuranceExpiry.ifBlank { null }
-                                    )
-                                )
-                            )
-                            navController.popBackStack()
-                        }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Text(stringResource(R.string.save))
+    Scaffold(topBar = {
+        CenterAlignedTopAppBar(
+            title = { Text(stringResource(R.string.add_car), fontWeight = FontWeight.Bold) },
+            navigationIcon = {
+                IconButton(onClick = openDrawer) {
+                    Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
                 }
+            })
+    }, bottomBar = {
+        Surface(shadowElevation = 8.dp) {
+            Button(
+                onClick = {
+                    if (validate()) {
+                        viewModel.onEvent(
+                            CarEvent.Add(
+                                Car(
+                                    model = model,
+                                    brand = brand,
+                                    year = year.toIntOrNull(),
+                                    photoUri = photoUri,
+                                    vin = vin.ifBlank { null },
+                                    registrationNumber = registrationNumber.ifBlank { null },
+                                    mileage = mileage.toIntOrNull(),
+                                    fuelType = fuelType?.displayName,
+                                    engineCapacity = engineCapacity.toDoubleOrNull(),
+                                    power = power.toIntOrNull(),
+                                    color = color.ifBlank { null },
+                                    notes = notes.ifBlank { null },
+                                    inspectionDate = inspectionDate.ifBlank { null },
+                                    insuranceExpiry = insuranceExpiry.ifBlank { null })
+                            )
+                        )
+                        navController.popBackStack()
+                    }
+                }, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(stringResource(R.string.save))
             }
         }
-    ) { padding ->
+    }) { padding ->
         Column(
             modifier = Modifier
                 .padding(padding)
                 .padding(24.dp)
                 .fillMaxWidth()
-                .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .verticalScroll(scrollState), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (photoUri != null) {
                 AsyncImage(
@@ -163,8 +155,7 @@ fun AddCarScreen(
                     contentDescription = stringResource(R.string.select_photo),
                     modifier = Modifier
                         .size(96.dp)
-                        .clickable { showImageDialog = true }
-                )
+                        .clickable { showImageDialog = true })
             }
             Button(
                 onClick = { pickImageLauncher.launch("image/*") },
@@ -183,8 +174,7 @@ fun AddCarScreen(
                             contentDescription = stringResource(R.string.select_photo),
                             modifier = Modifier.size(300.dp)
                         )
-                    }
-                )
+                    })
             }
             OutlinedTextField(
                 value = brand,
@@ -200,12 +190,10 @@ fun AddCarScreen(
                 supportingText = {
                     errors["brand"]?.let {
                         Text(
-                            it,
-                            color = MaterialTheme.colorScheme.error
+                            it, color = MaterialTheme.colorScheme.error
                         )
                     }
-                }
-            )
+                })
             OutlinedTextField(
                 value = model,
                 onValueChange = {
@@ -220,12 +208,10 @@ fun AddCarScreen(
                 supportingText = {
                     errors["model"]?.let {
                         Text(
-                            it,
-                            color = MaterialTheme.colorScheme.error
+                            it, color = MaterialTheme.colorScheme.error
                         )
                     }
-                }
-            )
+                })
             OutlinedTextField(
                 value = year,
                 onValueChange = {
@@ -241,12 +227,10 @@ fun AddCarScreen(
                 supportingText = {
                     errors["year"]?.let {
                         Text(
-                            it,
-                            color = MaterialTheme.colorScheme.error
+                            it, color = MaterialTheme.colorScheme.error
                         )
                     }
-                }
-            )
+                })
             OutlinedTextField(
                 value = vin,
                 onValueChange = { vin = it },
@@ -278,16 +262,13 @@ fun AddCarScreen(
                 supportingText = {
                     errors["mileage"]?.let {
                         Text(
-                            it,
-                            color = MaterialTheme.colorScheme.error
+                            it, color = MaterialTheme.colorScheme.error
                         )
                     }
-                }
-            )
+                })
             ExposedDropdownMenuBox(
                 expanded = showFuelTypeMenu,
-                onExpandedChange = { showFuelTypeMenu = !showFuelTypeMenu }
-            ) {
+                onExpandedChange = { showFuelTypeMenu = !showFuelTypeMenu }) {
                 OutlinedTextField(
                     value = fuelType?.let {
                         when (it) {
@@ -305,30 +286,24 @@ fun AddCarScreen(
                     modifier = Modifier
                         .menuAnchor()
                         .fillMaxWidth(),
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showFuelTypeMenu) }
-                )
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showFuelTypeMenu) })
                 ExposedDropdownMenu(
-                    expanded = showFuelTypeMenu,
-                    onDismissRequest = { showFuelTypeMenu = false }
-                ) {
+                    expanded = showFuelTypeMenu, onDismissRequest = { showFuelTypeMenu = false }) {
                     FuelType.entries.forEach { type ->
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    when (type) {
-                                        FuelType.PETROL -> stringResource(R.string.petrol)
-                                        FuelType.DIESEL -> stringResource(R.string.diesel)
-                                        FuelType.LPG -> stringResource(R.string.lpg)
-                                        FuelType.ELECTRIC -> stringResource(R.string.electric)
-                                        FuelType.HYBRID -> stringResource(R.string.hybrid)
-                                    }
-                                )
-                            },
-                            onClick = {
-                                fuelType = type
-                                showFuelTypeMenu = false
-                            }
-                        )
+                        DropdownMenuItem(text = {
+                            Text(
+                                when (type) {
+                                    FuelType.PETROL -> stringResource(R.string.petrol)
+                                    FuelType.DIESEL -> stringResource(R.string.diesel)
+                                    FuelType.LPG -> stringResource(R.string.lpg)
+                                    FuelType.ELECTRIC -> stringResource(R.string.electric)
+                                    FuelType.HYBRID -> stringResource(R.string.hybrid)
+                                }
+                            )
+                        }, onClick = {
+                            fuelType = type
+                            showFuelTypeMenu = false
+                        })
                     }
                 }
             }
@@ -347,12 +322,10 @@ fun AddCarScreen(
                 supportingText = {
                     errors["engineCapacity"]?.let {
                         Text(
-                            it,
-                            color = MaterialTheme.colorScheme.error
+                            it, color = MaterialTheme.colorScheme.error
                         )
                     }
-                }
-            )
+                })
             OutlinedTextField(
                 value = power,
                 onValueChange = {
@@ -368,12 +341,10 @@ fun AddCarScreen(
                 supportingText = {
                     errors["power"]?.let {
                         Text(
-                            it,
-                            color = MaterialTheme.colorScheme.error
+                            it, color = MaterialTheme.colorScheme.error
                         )
                     }
-                }
-            )
+                })
             OutlinedTextField(
                 value = color,
                 onValueChange = { color = it },
@@ -390,20 +361,16 @@ fun AddCarScreen(
                 singleLine = false,
                 modifier = Modifier.fillMaxWidth()
             )
-            OutlinedTextField(
+            DatePickerField(
                 value = inspectionDate,
                 onValueChange = { inspectionDate = it },
-                label = { Text(stringResource(R.string.inspection_date)) },
-                placeholder = { Text(stringResource(R.string.inspection_date_placeholder)) },
-                singleLine = true,
+                label = stringResource(R.string.inspection_date),
                 modifier = Modifier.fillMaxWidth()
             )
-            OutlinedTextField(
+            DatePickerField(
                 value = insuranceExpiry,
                 onValueChange = { insuranceExpiry = it },
-                label = { Text(stringResource(R.string.insurance_expiry)) },
-                placeholder = { Text(stringResource(R.string.insurance_expiry_placeholder)) },
-                singleLine = true,
+                label = stringResource(R.string.insurance_expiry),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(80.dp))

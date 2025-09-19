@@ -1,5 +1,6 @@
 package com.daromon.collective.ui.features.car
 
+import DatePickerField
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,14 +13,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -29,7 +27,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -43,18 +40,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.daromon.collective.R
 import com.daromon.collective.domain.model.ServiceRecord
-import com.daromon.collective.ui.features.car.ServiceRecordViewModel
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ServiceHistoryScreen(
-    carId: Int,
-    viewModel: ServiceRecordViewModel,
-    openDrawer: () -> Unit
+    carId: Int, viewModel: ServiceRecordViewModel, openDrawer: () -> Unit
 ) {
     val records by viewModel.records.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
@@ -62,23 +52,17 @@ fun ServiceHistoryScreen(
 
     LaunchedEffect(carId) { viewModel.loadRecords(carId) }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.service_history)) },
-                navigationIcon = {
-                    IconButton(onClick = openDrawer) {
-                        Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
-                    }
-                }
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { showAddDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_service))
+    Scaffold(topBar = {
+        TopAppBar(title = { Text(stringResource(R.string.service_history)) }, navigationIcon = {
+            IconButton(onClick = openDrawer) {
+                Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
             }
+        })
+    }, floatingActionButton = {
+        FloatingActionButton(onClick = { showAddDialog = true }) {
+            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_service))
         }
-    ) { padding ->
+    }) { padding ->
         LazyColumn(contentPadding = padding) {
             items(records) { record ->
                 Card(
@@ -109,12 +93,16 @@ fun ServiceHistoryScreen(
         }
         if (showAddDialog) {
             ServiceRecordDialog(
-                title = stringResource(R.string.add_service), initialRecord = ServiceRecord(
+                title = stringResource(R.string.add_service),
+                initialRecord = ServiceRecord(
                     carId = carId, date = "", type = "", description = "", cost = 0.0
-                ), onDismiss = { showAddDialog = false }, onConfirm = { record ->
+                ),
+                onDismiss = { showAddDialog = false },
+                onConfirm = { record ->
                     viewModel.add(record)
                     showAddDialog = false
-                }, isEdit = false
+                },
+                isEdit = false
             )
         }
         if (editRecord != null) {
@@ -220,58 +208,6 @@ fun ServiceRecordForm(
             Text(
                 stringResource(R.string.all_fields_required),
                 color = MaterialTheme.colorScheme.error
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DatePickerField(
-    value: String, onValueChange: (String) -> Unit, label: String, modifier: Modifier = Modifier
-) {
-    var showDatePicker by remember { mutableStateOf(false) }
-    val dateFormatter = remember { SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()) }
-
-    OutlinedTextField(
-        value = value,
-        onValueChange = { },
-        label = { Text(label) },
-        modifier = modifier,
-        readOnly = true,
-        trailingIcon = {
-            IconButton(onClick = { showDatePicker = true }) {
-                Icon(Icons.Default.DateRange, stringResource(R.string.date))
-            }
-        })
-
-    if (showDatePicker) {
-        val calendar = Calendar.getInstance()
-        if (value.isNotEmpty()) {
-            try {
-                calendar.time = dateFormatter.parse(value) ?: Date()
-            } catch (e: Exception) {
-                calendar.time = Date()
-            }
-        }
-
-        DatePickerDialog(onDismissRequest = { showDatePicker = false }, confirmButton = {
-            Button(onClick = {
-                val selectedDate = dateFormatter.format(calendar.time)
-                onValueChange(selectedDate)
-                showDatePicker = false
-            }) {
-                Text(stringResource(R.string.ok))
-            }
-        }, dismissButton = {
-            Button(onClick = { showDatePicker = false }) {
-                Text(stringResource(R.string.cancel))
-            }
-        }) {
-            DatePicker(
-                state = rememberDatePickerState(
-                    initialSelectedDateMillis = calendar.timeInMillis
-                )
             )
         }
     }

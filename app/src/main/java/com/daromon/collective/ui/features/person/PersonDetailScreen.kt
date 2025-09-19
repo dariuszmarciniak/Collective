@@ -1,5 +1,6 @@
 package com.daromon.collective.ui.features.person
 
+import DatePickerField
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,8 +15,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,8 +22,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -42,9 +39,6 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.daromon.collective.R
 import com.daromon.collective.domain.model.Person
-import com.daromon.collective.ui.features.person.PersonViewModel
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,11 +57,7 @@ fun PersonDetailScreen(
     var address by remember { mutableStateOf("") }
     var note by remember { mutableStateOf("") }
     var showImageDialog by remember { mutableStateOf(false) }
-
-    var dateOfBirth by remember { mutableStateOf<LocalDate?>(null) }
-    var showDatePicker by remember { mutableStateOf(false) }
-    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-
+    var dateOfBirth by remember { mutableStateOf("") }
     val pickImageLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -91,13 +81,7 @@ fun PersonDetailScreen(
             email = it.email.orEmpty()
             address = it.address.orEmpty()
             note = it.note.orEmpty()
-            dateOfBirth = it.dateOfBirth?.let { dobStr ->
-                try {
-                    LocalDate.parse(dobStr, dateFormatter)
-                } catch (_: Exception) {
-                    null
-                }
-            }
+            dateOfBirth = it.dateOfBirth.orEmpty()
         }
     }
 
@@ -125,7 +109,7 @@ fun PersonDetailScreen(
                         email = email.ifBlank { null },
                         address = address.ifBlank { null },
                         note = note.ifBlank { null },
-                        dateOfBirth = dateOfBirth?.format(dateFormatter)
+                        dateOfBirth = dateOfBirth
                     )
                     if (isNew) viewModel.add(newPerson) else viewModel.update(newPerson)
                     navController.popBackStack()
@@ -185,42 +169,12 @@ fun PersonDetailScreen(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
-            OutlinedTextField(
-                value = dateOfBirth?.format(dateFormatter) ?: "",
-                onValueChange = {},
-                label = { Text(stringResource(R.string.date_of_birth)) },
-                readOnly = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { showDatePicker = true })
-            if (showDatePicker) {
-                val datePickerState = rememberDatePickerState(
-                    initialSelectedDateMillis = dateOfBirth?.toEpochDay()
-                        ?.let { it * 24 * 60 * 60 * 1000 }
-                        ?: System.currentTimeMillis()
-                )
-                DatePickerDialog(
-                    onDismissRequest = { showDatePicker = false },
-                    confirmButton = {
-                        TextButton(onClick = {
-                            val millis = datePickerState.selectedDateMillis
-                            if (millis != null) {
-                                dateOfBirth = LocalDate.ofEpochDay(millis / (24 * 60 * 60 * 1000))
-                            }
-                            showDatePicker = false
-                        }) {
-                            Text(stringResource(android.R.string.ok))
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { showDatePicker = false }) {
-                            Text(stringResource(android.R.string.cancel))
-                        }
-                    }
-                ) {
-                    DatePicker(state = datePickerState)
-                }
-            }
+            DatePickerField(
+                value = dateOfBirth,
+                onValueChange = { dateOfBirth = it },
+                label = stringResource(R.string.date_of_birth),
+                modifier = Modifier.fillMaxWidth()
+            )
             OutlinedTextField(
                 value = phone,
                 onValueChange = { phone = it },
