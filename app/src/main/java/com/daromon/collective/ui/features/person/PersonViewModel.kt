@@ -1,4 +1,4 @@
-package com.daromon.collective.viewmodel
+package com.daromon.collective.ui.features.person
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PersonViewModel @Inject constructor(private val repository: PersonRepository) : ViewModel() {
     val persons: StateFlow<List<Person>> = repository.getAll()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+        .stateIn(viewModelScope, SharingStarted.Companion.WhileSubscribed(5000), emptyList())
 
     private val _selectedPerson = MutableStateFlow<Person?>(null)
     val selectedPerson: StateFlow<Person?> = _selectedPerson

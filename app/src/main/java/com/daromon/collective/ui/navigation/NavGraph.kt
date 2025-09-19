@@ -5,18 +5,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.daromon.collective.ui.screens.AddCarScreen
-import com.daromon.collective.ui.screens.CarDetailScreen
-import com.daromon.collective.ui.screens.CarListScreen
-import com.daromon.collective.ui.screens.HomeScreen
-import com.daromon.collective.ui.screens.NotesScreen
-import com.daromon.collective.ui.screens.PersonDetailScreen
-import com.daromon.collective.ui.screens.PersonsScreen
-import com.daromon.collective.ui.screens.ServiceHistoryScreen
-import com.daromon.collective.ui.screens.SettingsScreen
-import com.daromon.collective.viewmodel.CarViewModel
-import com.daromon.collective.viewmodel.PersonViewModel
-import com.daromon.collective.viewmodel.ServiceRecordViewModel
+import com.daromon.collective.ui.features.car.AddCarScreen
+import com.daromon.collective.ui.features.car.CarDetailScreen
+import com.daromon.collective.ui.features.car.CarListScreen
+import com.daromon.collective.ui.features.common.HomeScreen
+import com.daromon.collective.ui.features.notes.NotesScreen
+import com.daromon.collective.ui.features.person.PersonDetailScreen
+import com.daromon.collective.ui.features.person.PersonsScreen
+import com.daromon.collective.ui.features.car.ServiceHistoryScreen
+import com.daromon.collective.ui.features.settings.SettingsScreen
+import com.daromon.collective.ui.features.car.CarViewModel
+import com.daromon.collective.ui.features.person.PersonViewModel
+import com.daromon.collective.ui.features.car.ServiceRecordViewModel
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")

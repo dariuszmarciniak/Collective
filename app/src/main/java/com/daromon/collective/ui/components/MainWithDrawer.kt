@@ -19,9 +19,9 @@ import androidx.navigation.compose.rememberNavController
 import com.daromon.collective.R
 import com.daromon.collective.ui.navigation.NavGraph
 import com.daromon.collective.ui.navigation.Screen
-import com.daromon.collective.viewmodel.CarViewModel
-import com.daromon.collective.viewmodel.PersonViewModel
-import com.daromon.collective.viewmodel.ServiceRecordViewModel
+import com.daromon.collective.ui.features.car.CarViewModel
+import com.daromon.collective.ui.features.person.PersonViewModel
+import com.daromon.collective.ui.features.car.ServiceRecordViewModel
 import kotlinx.coroutines.launch
 
 @Composable

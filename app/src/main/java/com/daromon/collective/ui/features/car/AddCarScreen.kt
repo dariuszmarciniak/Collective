@@ -1,4 +1,4 @@
-package com.daromon.collective.ui.screens
+package com.daromon.collective.ui.features.car
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -47,7 +47,7 @@ import com.daromon.collective.R
 import com.daromon.collective.domain.model.Car
 import com.daromon.collective.domain.model.FuelType
 import com.daromon.collective.ui.event.CarEvent
-import com.daromon.collective.viewmodel.CarViewModel
+import com.daromon.collective.ui.features.car.CarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

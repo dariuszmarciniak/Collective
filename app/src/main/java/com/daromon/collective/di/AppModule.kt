@@ -7,11 +7,11 @@ import com.daromon.collective.data.local.CarDao
 import com.daromon.collective.data.local.PersonDao
 import com.daromon.collective.data.local.ServiceRecordDao
 import com.daromon.collective.domain.repository.CarRepository
-import com.daromon.collective.domain.repository.CarRepositoryImpl
+import com.daromon.collective.data.repository.CarRepositoryImpl
 import com.daromon.collective.domain.repository.PersonRepository
-import com.daromon.collective.domain.repository.PersonRepositoryImpl
+import com.daromon.collective.data.repository.PersonRepositoryImpl
 import com.daromon.collective.domain.repository.ServiceRecordRepository
-import com.daromon.collective.domain.repository.ServiceRecordRepositoryImpl
+import com.daromon.collective.data.repository.ServiceRecordRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

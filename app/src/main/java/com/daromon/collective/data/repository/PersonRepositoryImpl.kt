@@ -1,9 +1,10 @@
-package com.daromon.collective.domain.repository
+package com.daromon.collective.data.repository
 
 import com.daromon.collective.data.local.PersonDao
 import com.daromon.collective.domain.model.Person
 import com.daromon.collective.domain.model.toDomain
 import com.daromon.collective.domain.model.toEntity
+import com.daromon.collective.domain.repository.PersonRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

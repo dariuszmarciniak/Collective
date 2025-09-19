@@ -1,4 +1,4 @@
-package com.daromon.collective.ui.screens
+package com.daromon.collective.ui.features.car
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,7 +42,7 @@ import coil.compose.AsyncImage
 import com.daromon.collective.R
 import com.daromon.collective.ui.navigation.Screen
 import com.daromon.collective.ui.state.CarUiState
-import com.daromon.collective.viewmodel.CarViewModel
+import com.daromon.collective.ui.features.car.CarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,5 +1,7 @@
-package com.daromon.collective.ui.screens
+package com.daromon.collective.ui.features.settings
 
+import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -100,7 +102,7 @@ fun SettingsScreen(openDrawer: () -> Unit) {
 }
 
 
-fun setLocale(context: android.content.Context, lang: String) {
+fun setLocale(context: Context, lang: String) {
     val locale = Locale(lang)
     Locale.setDefault(locale)
     val resources = context.resources
@@ -108,7 +110,7 @@ fun setLocale(context: android.content.Context, lang: String) {
     config.setLocale(locale)
     resources.updateConfiguration(config, resources.displayMetrics)
     // Wymuś restart aktywności, by zmiana była widoczna
-    if (context is android.app.Activity) {
+    if (context is Activity) {
         context.recreate()
     }
 }

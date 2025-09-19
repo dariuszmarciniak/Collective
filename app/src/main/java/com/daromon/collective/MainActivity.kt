@@ -6,9 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.daromon.collective.ui.components.MainWithDrawer
 import com.daromon.collective.ui.theme.CollectiveTheme
-import com.daromon.collective.viewmodel.CarViewModel
-import com.daromon.collective.viewmodel.PersonViewModel
-import com.daromon.collective.viewmodel.ServiceRecordViewModel
+import com.daromon.collective.ui.features.car.CarViewModel
+import com.daromon.collective.ui.features.person.PersonViewModel
+import com.daromon.collective.ui.features.car.ServiceRecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

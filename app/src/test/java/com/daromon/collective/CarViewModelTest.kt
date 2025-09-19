@@ -7,7 +7,7 @@ import com.daromon.collective.domain.usecase.DeleteCarUseCase
 import com.daromon.collective.domain.usecase.GetCarsUseCase
 import com.daromon.collective.domain.usecase.UpdateCarUseCase
 import com.daromon.collective.ui.event.CarEvent
-import com.daromon.collective.viewmodel.CarViewModel
+import com.daromon.collective.ui.features.car.CarViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
